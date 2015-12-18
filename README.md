@@ -8,6 +8,9 @@ one is mine.
 For when an array would be too big, and a Map can't be iterated in
 reverse order.
 
+
+[![Coverage Status](https://coveralls.io/repos/isaacs/yallist/badge.svg?service=github)](https://coveralls.io/github/isaacs/yallist)
+
 ## basic usage
 
 ```javascript
