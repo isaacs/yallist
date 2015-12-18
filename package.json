@@ -11,7 +11,7 @@
     "tap": "^2.3.2"
   },
   "scripts": {
-    "test": "tap test/*.js"
+    "test": "tap test/*.js --cov"
   },
   "repository": {
     "type": "git",
