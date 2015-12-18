@@ -28,7 +28,7 @@ var myDoubledList = myList.map(function (k) {
 })
 // now myDoubledList contains ['barbar', 2, 4, 6, 'foofoo']
 // mapReverse is also a thing
-var myDoubledListReverse = myList.map(function (k) {
+var myDoubledListReverse = myList.mapReverse(function (k) {
   return k + k
 }) // ['foofoo', 6, 4, 2, 'barbar']
 
