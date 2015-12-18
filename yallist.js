@@ -41,11 +41,25 @@ Yallist.prototype.unshift = function () {
 }
 
 Yallist.prototype.pop = function () {
-  return pop(this)
+  if (!this.tail)
+    return undefined
+
+  var res = this.tail.value
+  this.tail = this.tail.prev
+  this.tail.next = null
+  this.length --
+  return res
 }
 
 Yallist.prototype.shift = function () {
-  return shift(this)
+  if (!this.head)
+    return undefined
+
+  var res = this.head.value
+  this.head = this.head.next
+  this.head.prev = null
+  this.length --
+  return res
 }
 
 Yallist.prototype.forEach = function (fn, thisp) {
@@ -243,28 +257,6 @@ function unshift (self, item) {
   if (!self.tail)
     self.tail = self.head
   self.length ++
-}
-
-function pop (self) {
-  if (!self.tail)
-    return undefined
-
-  var res = self.tail.value
-  self.tail = self.tail.prev
-  self.tail.next = null
-  self.length --
-  return res
-}
-
-function shift (self) {
-  if (!self.head)
-    return undefined
-
-  var res = self.head.value
-  self.head = self.head.next
-  self.head.prev = null
-  self.length --
-  return res
 }
 
 function Node (value, prev, next) {
