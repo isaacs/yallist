@@ -58,7 +58,9 @@ Default export, the class that holds and manages a list.
 Call it with either a forEach-able (like an array) or a set of
 arguments, to initialize the list.
 
-The Array-ish methods all act like you'd expect.  No magic length, and 
+The Array-ish methods all act like you'd expect.  No magic length,
+though, so if you change that it won't automatically prune or add
+empty spots.
 
 ### Yallist.create(..)
 
