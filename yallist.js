@@ -55,7 +55,7 @@ Yallist.prototype.removeNode = function (node) {
   node.list = null
 }
 
-Yallist.prototype.moveToHead = function (node) {
+Yallist.prototype.unshiftNode = function (node) {
   if (node === this.head) {
     return
   }
@@ -78,7 +78,7 @@ Yallist.prototype.moveToHead = function (node) {
   this.length ++
 }
 
-Yallist.prototype.moveToTail = function (node) {
+Yallist.prototype.pushNode = function (node) {
   if (node === this.tail) {
     return
   }
@@ -322,15 +322,17 @@ Yallist.prototype.reverse = function () {
 
 function push (self, item) {
   self.tail = new Node(item, self.tail, null, self)
-  if (!self.head)
+  if (!self.head) {
     self.head = self.tail
+  }
   self.length ++
 }
 
 function unshift (self, item) {
   self.head = new Node(item, null, self.head, self)
-  if (!self.tail)
+  if (!self.tail) {
     self.tail = self.head
+  }
   self.length ++
 }
 

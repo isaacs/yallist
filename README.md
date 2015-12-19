@@ -153,7 +153,7 @@ Create a reversed array representation of the list.
 
 Insert one or more items to the head of the list.
 
-#### yallist.moveToHead(node)
+#### yallist.unshiftNode(node)
 
 Move a Node object to the front of the list.  (That is, pull it out of
 wherever it lives, and make it the new head.)
@@ -161,7 +161,7 @@ wherever it lives, and make it the new head.)
 If the node belongs to a different list, then that list will remove it
 first.
 
-#### yallist.moveToTail(node)
+#### yallist.pushNode(node)
 
 Move a Node object to the end of the list.  (That is, pull it out of
 wherever it lives, and make it the new tail.)
