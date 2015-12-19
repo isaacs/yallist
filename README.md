@@ -153,6 +153,16 @@ Create a reversed array representation of the list.
 
 Insert one or more items to the head of the list.
 
+#### yallist.moveToHead(node)
+
+Move a Node object to the front of the list.  (That is, pull it out of
+wherever it lives, and make it the new head.)
+
+#### yallist.moveToTail(node)
+
+Move a Node object to the end of the list.  (That is, pull it out of
+wherever it lives, and make it the new tail.)
+
 ### Yallist.Node
 
 The class that holds the data and is actually the list.

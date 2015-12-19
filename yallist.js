@@ -26,6 +26,65 @@ function Yallist (list) {
   return self
 }
 
+Yallist.prototype.moveToHead = function (node) {
+  if (node === this.head) {
+    return
+  }
+  var head = this.head
+  var next = node.next
+  var prev = node.prev
+
+  // pluck it out of the list.
+  if (prev) {
+    prev.next = next
+  }
+  if (next) {
+    next.prev = prev
+  }
+
+  node.prev = null
+  node.next = head
+  if (head) {
+    head.prev = node
+  }
+
+  this.head = node
+  if (!this.tail) {
+    this.tail = node
+  }
+}
+
+Yallist.prototype.moveToTail = function (node) {
+  if (node === this.tail) {
+    return
+  }
+  var tail = this.tail
+  var next = node.next
+  var prev = node.prev
+
+  // pluck it out of the list.
+  if (prev) {
+    prev.next = next
+  }
+  if (next) {
+    next.prev = prev
+  }
+  if (node === this.head) {
+    this.head = next
+  }
+
+  node.next = null
+  node.prev = tail
+  if (tail) {
+    tail.next = node
+  }
+
+  this.tail = node
+  if (!this.head) {
+    this.head = node
+  }
+}
+
 Yallist.prototype.push = function () {
   for (var i = 0, l = arguments.length; i < l; i++) {
     push(this, arguments[i])
@@ -260,6 +319,10 @@ function unshift (self, item) {
 }
 
 function Node (value, prev, next) {
+  if (!(this instanceof Node)) {
+    return new Node(value, prev, next)
+  }
+
   this.value = value
 
   if (prev) {

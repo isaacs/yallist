@@ -92,7 +92,8 @@ var cases = [
   [ [-1, -2], [] ],
   [ [-5, -2], [2, 3, 4] ],
   [ [-99, 2], [1, 2] ],
-  [ [5, 99], [6] ]
+  [ [5, 99], [6] ],
+  [ [], [1,2,3,4,5,6] ]
 ]
 t.test('slice', function (t) {
   t.plan(cases.length)
@@ -116,3 +117,51 @@ t.test('sliceReverse', function (t) {
     })
   })
 })
+
+var inserter = Yallist(1,2,3,4,5)
+inserter.moveToHead(inserter.head.next)
+t.similar(inserter.toArray(), [2,1,3,4,5])
+inserter.moveToHead(inserter.tail)
+t.similar(inserter.toArray(), [5,2,1,3,4])
+inserter.moveToHead(inserter.head)
+t.similar(inserter.toArray(), [5,2,1,3,4])
+
+var single = Yallist(1)
+single.moveToHead(single.head)
+t.similar(single.toArray(), [1])
+
+inserter = Yallist(1,2,3,4,5)
+inserter.moveToTail(inserter.tail.prev)
+t.similar(inserter.toArray(), [1,2,3,5,4])
+inserter.moveToTail(inserter.head)
+t.similar(inserter.toArray(), [2,3,5,4,1])
+inserter.moveToHead(inserter.head)
+t.similar(inserter.toArray(), [2,3,5,4,1])
+
+single = Yallist(1)
+single.moveToTail(single.tail)
+t.similar(single.toArray(), [1])
+
+// Note: this is a very bad idea.  swiper no swiping!
+// If you swipe a head or tail, you break the list in a weird way.
+var swiped = Yallist(9,8,7)
+inserter.moveToHead(swiped.head.next)
+t.similar(inserter.toArray(), [8,2,3,5,4,1])
+t.similar(swiped.toArray(), [9,7])
+
+swiped = Yallist(9,8,7)
+inserter.moveToTail(swiped.head.next)
+t.similar(inserter.toArray(), [8,2,3,5,4,1,8])
+t.similar(swiped.toArray(), [9,7])
+
+swiped.moveToHead(Yallist.Node(99, null, null))
+t.similar(swiped.toArray(), [99,9,7])
+swiped.moveToTail(Yallist.Node(66, null, null))
+t.similar(swiped.toArray(), [99,9,7,66])
+
+var e = Yallist()
+e.moveToHead(Yallist.Node(1))
+t.same(e.toArray(), [1])
+e = Yallist()
+e.moveToTail(Yallist.Node(1))
+t.same(e.toArray(), [1])
