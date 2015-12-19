@@ -142,8 +142,6 @@ single = Yallist(1)
 single.moveToTail(single.tail)
 t.similar(single.toArray(), [1])
 
-// Note: this is a very bad idea.  swiper no swiping!
-// If you swipe a head or tail, you break the list in a weird way.
 var swiped = Yallist(9,8,7)
 inserter.moveToHead(swiped.head.next)
 t.similar(inserter.toArray(), [8,2,3,5,4,1])
@@ -154,9 +152,9 @@ inserter.moveToTail(swiped.head.next)
 t.similar(inserter.toArray(), [8,2,3,5,4,1,8])
 t.similar(swiped.toArray(), [9,7])
 
-swiped.moveToHead(Yallist.Node(99, null, null))
+swiped.moveToHead(Yallist.Node(99))
 t.similar(swiped.toArray(), [99,9,7])
-swiped.moveToTail(Yallist.Node(66, null, null))
+swiped.moveToTail(Yallist.Node(66))
 t.similar(swiped.toArray(), [99,9,7,66])
 
 var e = Yallist()
@@ -165,3 +163,26 @@ t.same(e.toArray(), [1])
 e = Yallist()
 e.moveToTail(Yallist.Node(1))
 t.same(e.toArray(), [1])
+
+// steal them back, don't break the lists
+swiped.moveToHead(inserter.head)
+t.same(swiped, Yallist(8,99,9,7,66))
+t.same(inserter, Yallist(2,3,5,4,1,8))
+swiped.moveToHead(inserter.tail)
+t.same(inserter, Yallist(2,3,5,4,1))
+t.same(swiped, Yallist(8,8,99,9,7,66))
+
+
+t.throws(function remove_foreign_node () {
+  e.removeNode(swiped.head)
+}, {}, new Error('removing node which does not belong to this list'))
+t.throws(function remove_unlisted_node () {
+  e.removeNode(Yallist.Node('nope'))
+}, {}, new Error('removing node which does not belong to this list'))
+
+e = Yallist(1,2)
+e.removeNode(e.head)
+t.same(e, Yallist(2))
+e = Yallist(1,2)
+e.removeNode(e.tail)
+t.same(e, Yallist(1))

@@ -26,23 +26,46 @@ function Yallist (list) {
   return self
 }
 
-Yallist.prototype.moveToHead = function (node) {
-  if (node === this.head) {
-    return
+Yallist.prototype.removeNode = function (node) {
+  if (node.list !== this) {
+    throw new Error('removing node which does not belong to this list')
   }
-  var head = this.head
+
   var next = node.next
   var prev = node.prev
 
-  // pluck it out of the list.
-  if (prev) {
-    prev.next = next
-  }
   if (next) {
     next.prev = prev
   }
 
+  if (prev) {
+    prev.next = next
+  }
+
+  if (node === this.head) {
+    this.head = next
+  }
+  if (node === this.tail) {
+    this.tail = prev
+  }
+
+  node.list.length --
+  node.next = null
   node.prev = null
+  node.list = null
+}
+
+Yallist.prototype.moveToHead = function (node) {
+  if (node === this.head) {
+    return
+  }
+
+  if (node.list) {
+    node.list.removeNode(node)
+  }
+
+  var head = this.head
+  node.list = this
   node.next = head
   if (head) {
     head.prev = node
@@ -52,28 +75,20 @@ Yallist.prototype.moveToHead = function (node) {
   if (!this.tail) {
     this.tail = node
   }
+  this.length ++
 }
 
 Yallist.prototype.moveToTail = function (node) {
   if (node === this.tail) {
     return
   }
+
+  if (node.list) {
+    node.list.removeNode(node)
+  }
+
   var tail = this.tail
-  var next = node.next
-  var prev = node.prev
-
-  // pluck it out of the list.
-  if (prev) {
-    prev.next = next
-  }
-  if (next) {
-    next.prev = prev
-  }
-  if (node === this.head) {
-    this.head = next
-  }
-
-  node.next = null
+  node.list = this
   node.prev = tail
   if (tail) {
     tail.next = node
@@ -83,6 +98,7 @@ Yallist.prototype.moveToTail = function (node) {
   if (!this.head) {
     this.head = node
   }
+  this.length ++
 }
 
 Yallist.prototype.push = function () {
@@ -305,24 +321,25 @@ Yallist.prototype.reverse = function () {
 }
 
 function push (self, item) {
-  self.tail = new Node(item, self.tail, null)
+  self.tail = new Node(item, self.tail, null, self)
   if (!self.head)
     self.head = self.tail
   self.length ++
 }
 
 function unshift (self, item) {
-  self.head = new Node(item, null, self.head)
+  self.head = new Node(item, null, self.head, self)
   if (!self.tail)
     self.tail = self.head
   self.length ++
 }
 
-function Node (value, prev, next) {
+function Node (value, prev, next, list) {
   if (!(this instanceof Node)) {
-    return new Node(value, prev, next)
+    return new Node(value, prev, next, list)
   }
 
+  this.list = list
   this.value = value
 
   if (prev) {

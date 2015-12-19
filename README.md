@@ -158,19 +158,24 @@ Insert one or more items to the head of the list.
 Move a Node object to the front of the list.  (That is, pull it out of
 wherever it lives, and make it the new head.)
 
-You should probably never move a node from one list to another.  It
-will work fine as long as it's not the head or tail, but if it's the
-head or tail, it will cause a weird state where the head and tail of
-the source list are not in sync.
-
-This could be fixed by adding a `node.list` reference, detecting that
-state, and correcting for it.  However, at this time, that is not the
-case.
+If the node belongs to a different list, then that list will remove it
+first.
 
 #### yallist.moveToTail(node)
 
 Move a Node object to the end of the list.  (That is, pull it out of
 wherever it lives, and make it the new tail.)
+
+If the node belongs to a list already, then that list will remove it
+first.
+
+#### yallist.removeNode(node)
+
+Remove a node from the list, preserving referential integrity of head
+and tail and other nodes.
+
+Will throw an error if you try to have a list remove a node that
+doesn't belong to it.
 
 ### Yallist.Node
 
@@ -192,3 +197,8 @@ The previous node in the list.
 #### node.value
 
 The data the node contains.
+
+#### node.list
+
+The list to which this node belongs.  (Null if it does not belong to
+any list.)
