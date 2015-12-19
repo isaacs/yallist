@@ -158,6 +158,15 @@ Insert one or more items to the head of the list.
 Move a Node object to the front of the list.  (That is, pull it out of
 wherever it lives, and make it the new head.)
 
+You should probably never move a node from one list to another.  It
+will work fine as long as it's not the head or tail, but if it's the
+head or tail, it will cause a weird state where the head and tail of
+the source list are not in sync.
+
+This could be fixed by adding a `node.list` reference, detecting that
+state, and correcting for it.  However, at this time, that is not the
+case.
+
 #### yallist.moveToTail(node)
 
 Move a Node object to the end of the list.  (That is, pull it out of
@@ -168,6 +177,9 @@ wherever it lives, and make it the new tail.)
 The class that holds the data and is actually the list.
 
 Call with `var n = new Node(value, previousNode, nextNode)`
+
+Note that if you do direct operations on Nodes themselves, it's very
+easy to get into weird states where the list is broken.  Be careful :)
 
 #### node.next
 
