@@ -9,7 +9,7 @@
   "dependencies": {},
   "devDependencies": {
     "standard": "^5.4.1",
-    "tap": "^2.3.2"
+    "tap": "^6.3.2"
   },
   "scripts": {
     "test": "tap test/*.js --cov",
