@@ -184,3 +184,23 @@ t.same(e, Yallist(2))
 e = Yallist(1, 2)
 e.removeNode(e.tail)
 t.same(e, Yallist(1))
+
+// shift all the way down
+e = Yallist()
+e.push(1)
+e.push(2)
+e.push(3)
+t.equal(e.shift(), 1)
+t.equal(e.shift(), 2)
+t.equal(e.shift(), 3)
+t.equal(e.shift(), undefined)
+
+// pop all the way down
+e = Yallist()
+e.unshift(1)
+e.unshift(2)
+e.unshift(3)
+t.equal(e.pop(), 1)
+t.equal(e.pop(), 2)
+t.equal(e.pop(), 3)
+t.equal(e.pop(), undefined)
