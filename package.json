@@ -6,6 +6,10 @@
   "directories": {
     "test": "test"
   },
+  "files": [
+    "yallist.js",
+    "iterator.js"
+  ],
   "dependencies": {},
   "devDependencies": {
     "tap": "^10.3.0"
