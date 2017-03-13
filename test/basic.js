@@ -204,3 +204,9 @@ t.equal(e.pop(), 1)
 t.equal(e.pop(), 2)
 t.equal(e.pop(), 3)
 t.equal(e.pop(), undefined)
+
+if (typeof Symbol === 'function' && Symbol.iterator &&
+  Yallist.prototype[Symbol.iterator]) {
+  e = Yallist(1, 2, 3, 4)
+  t.same(Array.from(e), [1, 2, 3, 4])
+}
