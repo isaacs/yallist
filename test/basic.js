@@ -213,3 +213,31 @@ t.test('iterator test', {
   e = Yallist(1, 2, 3, 4)
   t.same(Array.from(e), [1, 2, 3, 4])
 })
+
+e = new Yallist(1, 2, 3, 4, 5)
+t.same(e.splice(2, 0), [])
+t.same(e, new Yallist(1, 2, 3, 4, 5))
+
+e = new Yallist(1, 2, 3, 4, 5)
+t.same(e.splice(2, 1), [3])
+t.same(e, new Yallist(1, 2, 4, 5))
+
+e = new Yallist(1, 2, 3, 4, 5)
+t.same(e.splice(-2, 2), [4, 5])
+t.same(e, new Yallist(1, 2, 3))
+
+e = new Yallist(1, 2, 3, 4, 5)
+t.same(e.splice(2, 0, 6), [])
+t.same(e, new Yallist(1, 2, 6, 3, 4, 5))
+
+e = new Yallist(1, 2, 3, 4, 5)
+t.same(e.splice(-2, 10, 6, 7), [4, 5])
+t.same(e, new Yallist(1, 2, 3, 6, 7))
+
+e = new Yallist(1, 2, 3, 4, 5)
+t.same(e.splice(0, 0, 6), [])
+t.same(e, new Yallist(6, 1, 2, 3, 4, 5))
+
+e = new Yallist(1, 2, 3, 4, 5)
+t.same(e.splice(60, 0, 6), [])
+t.same(e, new Yallist(1, 2, 3, 4, 5, 6))
