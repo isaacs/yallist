@@ -322,7 +322,7 @@ Yallist.prototype.sliceReverse = function (from, to) {
 
 Yallist.prototype.splice = function (start, deleteCount, ...nodes) {
   if (start > this.length) {
-    start = this.length - 1
+    start = this.length
   }
   if (start < 0) {
     start = this.length + start;
@@ -337,17 +337,17 @@ Yallist.prototype.splice = function (start, deleteCount, ...nodes) {
     ret.push(walker.value)
     walker = this.removeNode(walker)
   }
+
   if (walker === null) {
-    walker = this.tail
+    for (var i = 0; i < nodes.length; i++) {
+      walker = push(this, nodes[i])
+    }
+  } else {
+    for (var i = 0; i < nodes.length; i++) {
+      walker = insertBefore(this, walker, nodes[i])
+    }
   }
 
-  if (walker !== this.head && walker !== this.tail) {
-    walker = walker.prev
-  }
-
-  for (var i = 0; i < nodes.length; i++) {
-    walker = insert(this, walker, nodes[i])
-  }
   return ret;
 }
 
@@ -364,14 +364,9 @@ Yallist.prototype.reverse = function () {
   return this
 }
 
-function insert (self, node, value) {
-  var inserted = node === self.head ?
-    new Node(value, null, node, self) :
-    new Node(value, node, node.next, self)
+function insertBefore (self, node, value) {
+  var inserted = new Node(value, node.prev, node, self)
 
-  if (inserted.next === null) {
-    self.tail = inserted
-  }
   if (inserted.prev === null) {
     self.head = inserted
   }
