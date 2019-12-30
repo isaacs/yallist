@@ -239,5 +239,33 @@ t.same(e.splice(0, 0, 6), [])
 t.same(e, new Yallist(6, 1, 2, 3, 4, 5))
 
 e = new Yallist(1, 2, 3, 4, 5)
+t.same(e.splice(1, 0, 6), [])
+t.same(e, new Yallist(1, 6, 2, 3, 4, 5))
+
+e = new Yallist(1, 2, 3, 4, 5)
+t.same(e.splice(1, 1, 6), [2])
+t.same(e, new Yallist(1, 6, 3, 4, 5))
+
+e = new Yallist(1, 2, 3, 4, 5)
+t.same(e.splice(0, 1, 6), [1])
+t.same(e, new Yallist(6, 2, 3, 4, 5))
+
+e = new Yallist(1, 2, 3, 4, 5)
 t.same(e.splice(60, 0, 6), [])
+t.same(Array.from(e), [1, 2, 3, 4, 5, 6])
+
+e = new Yallist(1, 2, 3, 4, 5)
+t.same(e.splice(4, 0, 6), [])
+t.same(e, new Yallist(1, 2, 3, 4, 6, 5))
+
+e = new Yallist(1, 2, 3, 4, 5)
+t.same(e.splice(5, 0, 6), [])
 t.same(e, new Yallist(1, 2, 3, 4, 5, 6))
+
+e = new Yallist(1, 2, 3, 4, 5)
+t.same(e.splice(-1, 0, 6), [])
+t.same(e, new Yallist(1, 2, 3, 4, 6, 5))
+
+e = new Yallist(1, 2, 3, 4, 5)
+t.same(e.splice(-2, 1, 6), [4])
+t.same(e, new Yallist(1, 2, 3, 6, 5))
