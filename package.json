@@ -10,9 +10,8 @@
     "yallist.js",
     "iterator.js"
   ],
-  "dependencies": {},
   "devDependencies": {
-    "tap": "^12.1.0"
+    "tap": "^15.1.6"
   },
   "scripts": {
     "test": "tap test/*.js --100",
