@@ -141,6 +141,10 @@ Just like Array.slice, but returns a new Yallist.
 
 Just like yallist.slice, but the result is returned in reverse.
 
+#### yallist.splice(start, deleteCount, ...)
+
+Like Array.splice.
+
 #### yallist.toArray()
 
 Create an array representation of the list.
