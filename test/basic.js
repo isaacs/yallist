@@ -1,5 +1,8 @@
-var t = require('tap')
-var Yallist = require('../yallist.js')
+import t from 'tap';
+import {
+  create as Yallist,
+  Node
+} from '../yallist.js';
 
 var y = new Yallist(1, 2, 3, 4, 5)
 var z = new Yallist([1, 2, 3, 4, 5])
@@ -151,16 +154,16 @@ inserter.pushNode(swiped.head.next)
 t.match(inserter.toArray(), [8, 2, 3, 5, 4, 1, 8])
 t.match(swiped.toArray(), [9, 7])
 
-swiped.unshiftNode(Yallist.Node(99))
+swiped.unshiftNode(Node(99))
 t.match(swiped.toArray(), [99, 9, 7])
-swiped.pushNode(Yallist.Node(66))
+swiped.pushNode(Node(66))
 t.match(swiped.toArray(), [99, 9, 7, 66])
 
 var e = Yallist()
-e.unshiftNode(Yallist.Node(1))
+e.unshiftNode(Node(1))
 t.same(e.toArray(), [1])
 e = Yallist()
-e.pushNode(Yallist.Node(1))
+e.pushNode(Node(1))
 t.same(e.toArray(), [1])
 
 // steal them back, don't break the lists
@@ -175,7 +178,7 @@ t.throws(function remove_foreign_node () {
   e.removeNode(swiped.head)
 }, {}, new Error('removing node which does not belong to this list'))
 t.throws(function remove_unlisted_node () {
-  e.removeNode(Yallist.Node('nope'))
+  e.removeNode(Node('nope'))
 }, {}, new Error('removing node which does not belong to this list'))
 
 e = Yallist(1, 2)
