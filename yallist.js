@@ -1,8 +1,4 @@
 'use strict'
-module.exports = Yallist
-
-Yallist.Node = Node
-Yallist.create = Yallist
 
 function Yallist (list) {
   var self = this
@@ -364,6 +360,12 @@ Yallist.prototype.reverse = function () {
   return this
 }
 
+Yallist.prototype[Symbol.iterator] = function* () {
+  for (let walker = this.head; walker; walker = walker.next) {
+    yield walker.value
+  }
+}
+
 function insert (self, node, value) {
   var inserted = node === self.head ?
     new Node(value, null, node, self) :
@@ -420,7 +422,7 @@ function Node (value, prev, next, list) {
   }
 }
 
-try {
-  // add if support for Symbol.iterator is present
-  require('./iterator.js')(Yallist)
-} catch (er) {}
+export {
+  Yallist as create,
+  Node
+};
