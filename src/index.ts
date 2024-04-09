@@ -116,12 +116,14 @@ export class Yallist<T = unknown> {
     }
 
     const res = this.tail.value;
+    const t = this.tail
     this.tail = this.tail.prev;
     if (this.tail) {
       this.tail.next = undefined;
     } else {
       this.head = undefined;
     }
+    t.list = undefined
     this.length--;
     return res;
   }
@@ -132,12 +134,14 @@ export class Yallist<T = unknown> {
     }
 
     const res = this.head.value;
+    const h = this.head
     this.head = this.head.next;
     if (this.head) {
       this.head.prev = undefined;
     } else {
       this.tail = undefined;
     }
+    h.list = undefined
     this.length--;
     return res;
   }

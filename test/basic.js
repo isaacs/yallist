@@ -267,3 +267,32 @@ t.same(e, new Yallist([6, 1, 2, 3, 4, 5]))
 e = new Yallist([1, 2, 3, 4, 5])
 t.same(e.splice(60, 0, 6), [])
 t.same(e, new Yallist([1, 2, 3, 4, 5, 6]))
+
+t.test('shift/removeNode bug', t => {
+  // https://github.com/isaacs/yallist/issues/35
+  const ll = new Yallist()
+
+  t.test('shift', t => {
+    ll.push({ name: 'a' })
+    const node = ll.head
+    t.equal(ll.length, 1)
+
+    ll.shift()
+    t.equal(ll.length, 0)
+
+    t.throws(() => ll.removeNode(node))
+    t.equal(ll.length, 0)
+    t.end()
+  })
+  t.test('push', t => {
+    ll.push({ name: 'a' })
+    const node = ll.head
+    ll.pop()
+    t.equal(ll.length, 0)
+
+    t.throws(() => ll.removeNode(node))
+    t.equal(ll.length, 0)
+    t.end()
+  })
+  t.end()
+})
