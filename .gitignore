@@ -1,4 +1,6 @@
-node_modules/
-coverage/
-.nyc_output/
-nyc_output/
+/node_modules/
+/.tap/
+/dist/
+/coverage/
+/.nyc_output/
+/nyc_output/
