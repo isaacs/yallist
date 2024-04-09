@@ -2,7 +2,7 @@
   "tsconfig": "./.tshy/esm.json",
   "entryPoints": ["./src/**/*.+(ts|tsx|mts|cts)"],
   "navigationLinks": {
-    "GitHub": "https://github.com/isaacs/is-actual-promise",
+    "GitHub": "https://github.com/isaacs/yallist",
     "isaacs projects": "https://isaacs.github.io/"
   }
 }
