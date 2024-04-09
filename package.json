@@ -8,7 +8,8 @@
   "devDependencies": {
     "prettier": "^3.2.5",
     "tap": "^18.7.2",
-    "tshy": "^1.13.1"
+    "tshy": "^1.13.1",
+    "typedoc": "^0.25.13"
   },
   "scripts": {
     "preversion": "npm test",
