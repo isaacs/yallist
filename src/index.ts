@@ -1,7 +1,7 @@
 export class Yallist<T = unknown> {
-  tail?: Node<T>;
-  head?: Node<T>;
-  length: number = 0;
+  tail?: Node<T>
+  head?: Node<T>
+  length: number = 0
 
   static create<T = unknown>(list: Iterable<T> = []) {
     return new Yallist(list)
@@ -9,148 +9,153 @@ export class Yallist<T = unknown> {
 
   constructor(list: Iterable<T> = []) {
     for (const item of list) {
-      this.push(item);
+      this.push(item)
     }
   }
 
   *[Symbol.iterator]() {
     for (let walker = this.head; walker; walker = walker.next) {
-      yield walker.value;
+      yield walker.value
     }
   }
 
   removeNode(node: Node<T>) {
     if (node.list !== this) {
-      throw new Error("removing node which does not belong to this list");
+      throw new Error(
+        'removing node which does not belong to this list',
+      )
     }
 
-    const next = node.next;
-    const prev = node.prev;
+    const next = node.next
+    const prev = node.prev
 
     if (next) {
-      next.prev = prev;
+      next.prev = prev
     }
 
     if (prev) {
-      prev.next = next;
+      prev.next = next
     }
 
     if (node === this.head) {
-      this.head = next;
+      this.head = next
     }
     if (node === this.tail) {
-      this.tail = prev;
+      this.tail = prev
     }
 
-    this.length--;
-    node.next = undefined;
-    node.prev = undefined;
-    node.list = undefined;
+    this.length--
+    node.next = undefined
+    node.prev = undefined
+    node.list = undefined
 
-    return next;
+    return next
   }
 
   unshiftNode(node: Node<T>) {
     if (node === this.head) {
-      return;
+      return
     }
 
     if (node.list) {
-      node.list.removeNode(node);
+      node.list.removeNode(node)
     }
 
-    const head = this.head;
-    node.list = this;
-    node.next = head;
+    const head = this.head
+    node.list = this
+    node.next = head
     if (head) {
-      head.prev = node;
+      head.prev = node
     }
 
-    this.head = node;
+    this.head = node
     if (!this.tail) {
-      this.tail = node;
+      this.tail = node
     }
-    this.length++;
+    this.length++
   }
 
   pushNode(node: Node<T>) {
     if (node === this.tail) {
-      return;
+      return
     }
 
     if (node.list) {
-      node.list.removeNode(node);
+      node.list.removeNode(node)
     }
 
-    const tail = this.tail;
-    node.list = this;
-    node.prev = tail;
+    const tail = this.tail
+    node.list = this
+    node.prev = tail
     if (tail) {
-      tail.next = node;
+      tail.next = node
     }
 
-    this.tail = node;
+    this.tail = node
     if (!this.head) {
-      this.head = node;
+      this.head = node
     }
-    this.length++;
+    this.length++
   }
 
   push(...args: T[]) {
     for (let i = 0, l = args.length; i < l; i++) {
-      push(this, args[i]);
+      push(this, args[i])
     }
-    return this.length;
+    return this.length
   }
 
   unshift(...args: T[]) {
     for (var i = 0, l = args.length; i < l; i++) {
-      unshift(this, args[i]);
+      unshift(this, args[i])
     }
-    return this.length;
+    return this.length
   }
 
   pop() {
     if (!this.tail) {
-      return undefined;
+      return undefined
     }
 
-    const res = this.tail.value;
+    const res = this.tail.value
     const t = this.tail
-    this.tail = this.tail.prev;
+    this.tail = this.tail.prev
     if (this.tail) {
-      this.tail.next = undefined;
+      this.tail.next = undefined
     } else {
-      this.head = undefined;
+      this.head = undefined
     }
     t.list = undefined
-    this.length--;
-    return res;
+    this.length--
+    return res
   }
 
   shift() {
     if (!this.head) {
-      return undefined;
+      return undefined
     }
 
-    const res = this.head.value;
+    const res = this.head.value
     const h = this.head
-    this.head = this.head.next;
+    this.head = this.head.next
     if (this.head) {
-      this.head.prev = undefined;
+      this.head.prev = undefined
     } else {
-      this.tail = undefined;
+      this.tail = undefined
     }
     h.list = undefined
-    this.length--;
-    return res;
+    this.length--
+    return res
   }
 
-  forEach(fn: (value: T, i: number, list: Yallist<T>) => any, thisp?: any) {
-    thisp = thisp || this;
+  forEach(
+    fn: (value: T, i: number, list: Yallist<T>) => any,
+    thisp?: any,
+  ) {
+    thisp = thisp || this
     for (let walker = this.head, i = 0; !!walker; i++) {
-      fn.call(thisp, walker.value, i, this);
-      walker = walker.next;
+      fn.call(thisp, walker.value, i, this)
+      walker = walker.next
     }
   }
 
@@ -158,268 +163,285 @@ export class Yallist<T = unknown> {
     fn: (value: T, i: number, list: Yallist<T>) => any,
     thisp?: any,
   ) {
-    thisp = thisp || this;
+    thisp = thisp || this
     for (let walker = this.tail, i = this.length - 1; !!walker; i--) {
-      fn.call(thisp, walker.value, i, this);
-      walker = walker.prev;
+      fn.call(thisp, walker.value, i, this)
+      walker = walker.prev
     }
   }
 
   get(n: number) {
-    let i = 0;
-    let walker = this.head;
+    let i = 0
+    let walker = this.head
     for (; !!walker && i < n; i++) {
-      walker = walker.next;
+      walker = walker.next
     }
     if (i === n && !!walker) {
-      return walker.value;
+      return walker.value
     }
   }
 
   getReverse(n: number) {
-    let i = 0;
-    let walker = this.tail;
+    let i = 0
+    let walker = this.tail
     for (; !!walker && i < n; i++) {
       // abort out of the list early if we hit a cycle
-      walker = walker.prev;
+      walker = walker.prev
     }
     if (i === n && !!walker) {
-      return walker.value;
+      return walker.value
     }
   }
 
-  map<R = any>(fn: (value: T, list: Yallist<T>) => R, thisp?: any): Yallist<R> {
-    thisp = thisp || this;
-    const res = new Yallist<R>();
+  map<R = any>(
+    fn: (value: T, list: Yallist<T>) => R,
+    thisp?: any,
+  ): Yallist<R> {
+    thisp = thisp || this
+    const res = new Yallist<R>()
     for (let walker = this.head; !!walker; ) {
-      res.push(fn.call(thisp, walker.value, this));
-      walker = walker.next;
+      res.push(fn.call(thisp, walker.value, this))
+      walker = walker.next
     }
-    return res;
+    return res
   }
 
   mapReverse<R = any>(
     fn: (value: T, list: Yallist<T>) => R,
     thisp?: any,
   ): Yallist<R> {
-    thisp = thisp || this;
-    var res = new Yallist<R>();
+    thisp = thisp || this
+    var res = new Yallist<R>()
     for (let walker = this.tail; !!walker; ) {
-      res.push(fn.call(thisp, walker.value, this));
-      walker = walker.prev;
+      res.push(fn.call(thisp, walker.value, this))
+      walker = walker.prev
     }
-    return res;
+    return res
   }
 
-  reduce(fn: (left: T, right: T, i: number) => T): T;
-  reduce<R = any>(fn: (acc: R, next: T, i: number) => R, initial: R): R;
-  reduce<R = any>(fn: (acc: R, next: T, i: number) => R, initial?: R): R {
-    let acc: R | T;
-    let walker = this.head;
+  reduce(fn: (left: T, right: T, i: number) => T): T
+  reduce<R = any>(
+    fn: (acc: R, next: T, i: number) => R,
+    initial: R,
+  ): R
+  reduce<R = any>(
+    fn: (acc: R, next: T, i: number) => R,
+    initial?: R,
+  ): R {
+    let acc: R | T
+    let walker = this.head
     if (arguments.length > 1) {
-      acc = initial as R;
+      acc = initial as R
     } else if (this.head) {
-      walker = this.head.next;
-      acc = this.head.value;
+      walker = this.head.next
+      acc = this.head.value
     } else {
-      throw new TypeError("Reduce of empty list with no initial value");
+      throw new TypeError(
+        'Reduce of empty list with no initial value',
+      )
     }
 
     for (var i = 0; !!walker; i++) {
-      acc = fn(acc as R, walker.value, i);
-      walker = walker.next;
+      acc = fn(acc as R, walker.value, i)
+      walker = walker.next
     }
 
-    return acc as R;
+    return acc as R
   }
 
-  reduceReverse(fn: (left: T, right: T, i: number) => T): T;
-  reduceReverse<R = any>(fn: (acc: R, next: T, i: number) => R, initial: R): R;
+  reduceReverse(fn: (left: T, right: T, i: number) => T): T
+  reduceReverse<R = any>(
+    fn: (acc: R, next: T, i: number) => R,
+    initial: R,
+  ): R
   reduceReverse<R = any>(
     fn: (acc: R, next: T, i: number) => R,
     initial?: R,
   ): R {
-    let acc: R | T;
-    let walker = this.tail;
+    let acc: R | T
+    let walker = this.tail
     if (arguments.length > 1) {
-      acc = initial as R;
+      acc = initial as R
     } else if (this.tail) {
-      walker = this.tail.prev;
-      acc = this.tail.value;
+      walker = this.tail.prev
+      acc = this.tail.value
     } else {
-      throw new TypeError("Reduce of empty list with no initial value");
+      throw new TypeError(
+        'Reduce of empty list with no initial value',
+      )
     }
 
     for (let i = this.length - 1; !!walker; i--) {
-      acc = fn(acc as R, walker.value, i);
-      walker = walker.prev;
+      acc = fn(acc as R, walker.value, i)
+      walker = walker.prev
     }
 
-    return acc as R;
+    return acc as R
   }
 
   toArray() {
-    const arr = new Array(this.length);
+    const arr = new Array(this.length)
     for (let i = 0, walker = this.head; !!walker; i++) {
-      arr[i] = walker.value;
-      walker = walker.next;
+      arr[i] = walker.value
+      walker = walker.next
     }
-    return arr;
+    return arr
   }
 
   toArrayReverse() {
-    const arr = new Array(this.length);
+    const arr = new Array(this.length)
     for (let i = 0, walker = this.tail; !!walker; i++) {
-      arr[i] = walker.value;
-      walker = walker.prev;
+      arr[i] = walker.value
+      walker = walker.prev
     }
-    return arr;
+    return arr
   }
 
   slice(from: number = 0, to: number = this.length) {
     if (to < 0) {
-      to += this.length;
+      to += this.length
     }
     if (from < 0) {
-      from += this.length;
+      from += this.length
     }
-    const ret = new Yallist();
+    const ret = new Yallist()
     if (to < from || to < 0) {
-      return ret;
+      return ret
     }
     if (from < 0) {
-      from = 0;
+      from = 0
     }
     if (to > this.length) {
-      to = this.length;
+      to = this.length
     }
-    let walker = this.head;
-    let i = 0;
+    let walker = this.head
+    let i = 0
     for (i = 0; !!walker && i < from; i++) {
-      walker = walker.next;
+      walker = walker.next
     }
     for (; !!walker && i < to; i++, walker = walker.next) {
-      ret.push(walker.value);
+      ret.push(walker.value)
     }
-    return ret;
+    return ret
   }
 
   sliceReverse(from: number = 0, to: number = this.length) {
     if (to < 0) {
-      to += this.length;
+      to += this.length
     }
     if (from < 0) {
-      from += this.length;
+      from += this.length
     }
-    const ret = new Yallist();
+    const ret = new Yallist()
     if (to < from || to < 0) {
-      return ret;
+      return ret
     }
     if (from < 0) {
-      from = 0;
+      from = 0
     }
     if (to > this.length) {
-      to = this.length;
+      to = this.length
     }
-    let i = this.length;
-    let walker = this.tail;
+    let i = this.length
+    let walker = this.tail
     for (; !!walker && i > to; i--) {
-      walker = walker.prev;
+      walker = walker.prev
     }
     for (; !!walker && i > from; i--, walker = walker.prev) {
-      ret.push(walker.value);
+      ret.push(walker.value)
     }
-    return ret;
+    return ret
   }
 
   splice(start: number, deleteCount: number = 0, ...nodes: T[]) {
     if (start > this.length) {
-      start = this.length - 1;
+      start = this.length - 1
     }
     if (start < 0) {
-      start = this.length + start;
+      start = this.length + start
     }
 
-    let walker = this.head;
+    let walker = this.head
 
     for (let i = 0; !!walker && i < start; i++) {
-      walker = walker.next;
+      walker = walker.next
     }
 
-    const ret = [];
+    const ret: T[] = []
     for (let i = 0; !!walker && i < deleteCount; i++) {
-      ret.push(walker.value);
-      walker = this.removeNode(walker);
+      ret.push(walker.value)
+      walker = this.removeNode(walker)
     }
     if (!walker) {
-      walker = this.tail;
+      walker = this.tail
+    } else if (walker !== this.tail) {
+      walker = walker.prev
     }
 
-    if (walker && walker !== this.head && walker !== this.tail) {
-      walker = walker.prev;
+    for (const v of nodes) {
+      walker = insertAfter<T>(this, walker, v)
     }
 
-    if (walker) {
-      for (const v of nodes) {
-        walker = insert<T>(this, walker, v);
-      }
-    }
-    return ret;
+    return ret
   }
 
   reverse() {
-    const head = this.head;
-    const tail = this.tail;
+    const head = this.head
+    const tail = this.tail
     for (let walker = head; !!walker; walker = walker.prev) {
-      const p = walker.prev;
-      walker.prev = walker.next;
-      walker.next = p;
+      const p = walker.prev
+      walker.prev = walker.next
+      walker.next = p
     }
-    this.head = tail;
-    this.tail = head;
-    return this;
+    this.head = tail
+    this.tail = head
+    return this
   }
 }
 
-function insert<T>(self: Yallist<T>, node: Node<T>, value: T) {
-  const inserted =
-    node === self.head
-      ? new Node<T>(value, undefined, node, self)
-      : new Node<T>(value, node, node.next, self);
+// insertAfter undefined means "make the node the new head of list"
+function insertAfter<T>(
+  self: Yallist<T>,
+  node: Node<T> | undefined,
+  value: T,
+) {
+  const prev = node
+  const next = node ? node.next : self.head
+  const inserted = new Node<T>(value, prev, next, self)
 
   if (inserted.next === undefined) {
-    self.tail = inserted;
+    self.tail = inserted
   }
   if (inserted.prev === undefined) {
-    self.head = inserted;
+    self.head = inserted
   }
 
-  self.length++;
+  self.length++
 
-  return inserted;
+  return inserted
 }
 
 function push<T>(self: Yallist<T>, item: T) {
-  self.tail = new Node<T>(item, self.tail, undefined, self);
+  self.tail = new Node<T>(item, self.tail, undefined, self)
   if (!self.head) {
-    self.head = self.tail;
+    self.head = self.tail
   }
-  self.length++;
+  self.length++
 }
 
 function unshift<T>(self: Yallist<T>, item: T) {
-  self.head = new Node<T>(item, undefined, self.head, self);
+  self.head = new Node<T>(item, undefined, self.head, self)
   if (!self.tail) {
-    self.tail = self.head;
+    self.tail = self.head
   }
-  self.length++;
+  self.length++
 }
 
 export class Node<T = unknown> {
-  list?: Yallist<T>;
-  next?: Node<T>;
-  prev?: Node<T>;
-  value: T;
+  list?: Yallist<T>
+  next?: Node<T>
+  prev?: Node<T>
+  value: T
 
   constructor(
     value: T,
@@ -427,21 +449,21 @@ export class Node<T = unknown> {
     next?: Node<T> | undefined,
     list?: Yallist<T> | undefined,
   ) {
-    this.list = list;
-    this.value = value;
+    this.list = list
+    this.value = value
 
     if (prev) {
-      prev.next = this;
-      this.prev = prev;
+      prev.next = this
+      this.prev = prev
     } else {
-      this.prev = undefined;
+      this.prev = undefined
     }
 
     if (next) {
-      next.prev = this;
-      this.next = next;
+      next.prev = this
+      this.next = next
     } else {
-      this.next = undefined;
+      this.next = undefined
     }
   }
 }

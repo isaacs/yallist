@@ -296,3 +296,10 @@ t.test('shift/removeNode bug', t => {
   })
   t.end()
 })
+
+t.test('splice bug', t => {
+  const myList = new Yallist([1, 2, 3])
+  myList.splice(1, 0, 'should be second item')
+  t.same(myList.toArray(), [1, 'should be second item', 2, 3])
+  t.end()
+})
