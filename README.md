@@ -55,13 +55,13 @@ Default export, the class that holds and manages a list.
 Call it with either a forEach-able (like an array) or a set of
 arguments, to initialize the list.
 
-The Array-ish methods all act like you'd expect.  No magic length,
+The Array-ish methods all act like you'd expect. No magic length,
 though, so if you change that it won't automatically prune or add
 empty spots.
 
 ### Yallist.create(..)
 
-Alias for Yallist function.  Some people like factories.
+Alias for Yallist function. Some people like factories.
 
 #### yallist.head
 
@@ -73,7 +73,7 @@ The last node in the list
 
 #### yallist.length
 
-The number of nodes in the list.  (Change this at your peril.  It is
+The number of nodes in the list. (Change this at your peril. It is
 not magic like Array length.)
 
 #### yallist.toArray()
@@ -90,7 +90,7 @@ Call a function on each item in the list, in reverse order.
 
 #### yallist.get(n)
 
-Get the data at position `n` in the list.  If you use this a lot,
+Get the data at position `n` in the list. If you use this a lot,
 probably better off just using an Array.
 
 #### yallist.getReverse(n)
@@ -156,7 +156,7 @@ Insert one or more items to the head of the list.
 
 #### yallist.unshiftNode(node)
 
-Move a Node object to the front of the list.  (That is, pull it out of
+Move a Node object to the front of the list. (That is, pull it out of
 wherever it lives, and make it the new head.)
 
 If the node belongs to a different list, then that list will remove it
@@ -164,7 +164,7 @@ first.
 
 #### yallist.pushNode(node)
 
-Move a Node object to the end of the list.  (That is, pull it out of
+Move a Node object to the end of the list. (That is, pull it out of
 wherever it lives, and make it the new tail.)
 
 If the node belongs to a list already, then that list will remove it
@@ -178,6 +178,10 @@ and tail and other nodes.
 Will throw an error if you try to have a list remove a node that
 doesn't belong to it.
 
+#### yallist.find(predicate)
+
+Like Array.find.
+
 ### Yallist.Node
 
 The class that holds the data and is actually the list.
@@ -185,7 +189,7 @@ The class that holds the data and is actually the list.
 Call with `const n = new Node(value, previousNode, nextNode)`
 
 Note that if you do direct operations on Nodes themselves, it's very
-easy to get into weird states where the list is broken.  Be careful :)
+easy to get into weird states where the list is broken. Be careful :)
 
 #### node.next
 
@@ -201,5 +205,5 @@ The data the node contains.
 
 #### node.list
 
-The list to which this node belongs.  (Null if it does not belong to
+The list to which this node belongs. (Null if it does not belong to
 any list.)

@@ -397,6 +397,22 @@ export class Yallist<T = unknown> {
     this.tail = head
     return this
   }
+
+  find(predicate: (value: T, index: number) => boolean) {
+    let walker = this.head
+    let index = 0
+
+    while (walker !== undefined) {
+      if (predicate(walker.value, index)) {
+        return walker
+      }
+
+      walker = walker.next
+      index++
+    }
+
+    return undefined
+  }
 }
 
 // insertAfter undefined means "make the node the new head of list"

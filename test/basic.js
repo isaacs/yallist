@@ -303,3 +303,15 @@ t.test('splice bug', t => {
   t.same(myList.toArray(), [1, 'should be second item', 2, 3])
   t.end()
 })
+
+t.test('find', t => {
+  const ll = new Yallist([1, 2, 3, 4, 5])
+
+  const foundNode = ll.find(value => value === 3)
+  t.equal(foundNode?.value, 3)
+
+  const notFoundNode = ll.find(value => value === 6)
+  t.equal(notFoundNode, undefined)
+
+  t.end()
+})
