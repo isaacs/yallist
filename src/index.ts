@@ -279,7 +279,7 @@ export class Yallist<T = unknown> {
     return acc as R
   }
 
-  toArray() {
+  toArray(): T[] {
     const arr = new Array(this.length)
     for (let i = 0, walker = this.head; !!walker; i++) {
       arr[i] = walker.value
@@ -288,7 +288,7 @@ export class Yallist<T = unknown> {
     return arr
   }
 
-  toArrayReverse() {
+  toArrayReverse(): T[] {
     const arr = new Array(this.length)
     for (let i = 0, walker = this.tail; !!walker; i++) {
       arr[i] = walker.value
