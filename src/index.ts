@@ -279,8 +279,8 @@ export class Yallist<T = unknown> {
     return acc as R
   }
 
-  toArray() {
-    const arr = new Array(this.length)
+  toArray(): T[] {
+    const arr: T[] = new Array(this.length)
     for (let i = 0, walker = this.head; !!walker; i++) {
       arr[i] = walker.value
       walker = walker.next
