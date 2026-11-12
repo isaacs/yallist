@@ -355,7 +355,7 @@ export class Yallist<T = unknown> {
 
   splice(start: number, deleteCount: number = 0, ...nodes: T[]) {
     if (start > this.length) {
-      start = this.length - 1
+      start = this.length
     }
     if (start < 0) {
       start = this.length + start
@@ -374,7 +374,7 @@ export class Yallist<T = unknown> {
     }
     if (!walker) {
       walker = this.tail
-    } else if (walker !== this.tail) {
+    } else {
       walker = walker.prev
     }
 

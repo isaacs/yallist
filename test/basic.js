@@ -303,3 +303,33 @@ t.test('splice bug', t => {
   t.same(myList.toArray(), [1, 'should be second item', 2, 3])
   t.end()
 })
+
+// https://github.com/isaacs/yallist/issues/45
+t.test('splice matches Array.splice at the tail', t => {
+  const cases = [
+    [
+      ['a', 'b', 'c'],
+      [2, 0, 'x'],
+    ],
+    [
+      ['a', 'b', 'c'],
+      [1, 1, 'x'],
+    ],
+    [['a'], [0, 0, 'x']],
+    [
+      ['a', 'b', 'c'],
+      [5, 1],
+    ],
+    [
+      [1, 2, 3, 4, 5],
+      [60, 0, 6],
+    ],
+  ]
+  for (const [items, args] of cases) {
+    const list = new Yallist(items)
+    const array = items.slice()
+    t.same(list.splice(...args), array.splice(...args), String(args))
+    t.same(list.toArray(), array, String(args))
+  }
+  t.end()
+})
